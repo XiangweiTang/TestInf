@@ -8,8 +8,12 @@ namespace TestInf
 {
     class Program
     {
+        static TestInfArgs TIArg = new TestInfArgs();
         static void Main(string[] args)
         {
+            TIArg = new TestInfArgs(args);
         }
+
+
     }
 }
