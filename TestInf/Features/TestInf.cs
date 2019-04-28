@@ -9,9 +9,10 @@ namespace TestInf.Features
     public abstract class TestInf
     {
         public TestInf() { }
-        public void LoadAndRun()
+        public DummyConfig Cfg = new DummyConfig();
+        public void LoadAndRun(TestInfArgs arg)
         {
-
+            Cfg.Load(arg);
         }        
     }
 }

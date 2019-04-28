@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 namespace TestInf
 {
     class Program
-    {
-        static TestInfArgs TIArg = new TestInfArgs();
+    {        
+        static Features.DummyConfig MainCfg = new Features.DummyConfig();
         static void Main(string[] args)
         {
-            TIArg = new TestInfArgs(args);
+            PrimaryLoad(args);
         }
 
-
+        static void PrimaryLoad(string[] args)
+        {
+            var arg = new TestInfArgs(args);
+            MainCfg.Load(arg);
+        }        
     }
 }
