@@ -11,6 +11,8 @@ namespace TestInf.Features
     public abstract class Config
     {
         public Config() { }
+
+
         public string TaskName { get; private set; } = "NA";
         private XmlDocument XDoc = new XmlDocument();
         private XmlNode TaskNode = null;
