@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace TestInf
     {
         public TaskMode Mode { get; private set; } = TaskMode.NA;
         public string ConfigPath { get; private set; } = "";
-        public Dictionary<string, string> ArgDict { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string[]> ArgDict { get; private set; } = new Dictionary<string, string[]>();
         public TestInfArgs() { }
         public TestInfArgs(string[] args)
         {
@@ -48,33 +49,28 @@ namespace TestInf
 
         private void SetArgDict(IEnumerable<string> args)
         {
-            // -OPT0 ARG00 ARG01 ... -OPT1 ARG10 ARG11 ...
-            string key = "";
-            List<string> values = new List<string>();
+            // FreeArg0 FreeArg1 ... -OPT0 Arg00 Arg01 ... -OPT1 Arg10 Arg11 ...
+            /*
+             * Key: ""  Value: {FreeArg0, FreeArg1, ...}
+             * Key: "opt0"  Value: {Arg00, Arg01, ...}
+             * Key: "opt1"  Value: {Arg10, Arg11, ...}
+             */
+
+            string key = "";            
+            List<string> currentArgList = new List<string>();
             foreach(string arg in args)
             {
                 if (arg[0] == '-')
                 {
-                    if (!string.IsNullOrEmpty(key))
-                    {
-                        Sanity.Requires(!ArgDict.ContainsKey(key), $"Duplicate in options: -{key}.");
-                        string value = string.Join(" ", values);                        
-                        ArgDict.Add(key, value);
-                        values.Clear();
-                    }
-                    key = arg.Substring(1);
+                    ArgDict.Add(key, currentArgList.ToArray());
+                    currentArgList.Clear();
+                    key = arg.ToLower();
+                    Sanity.Requires(!ArgDict.ContainsKey(key), $"Duplication option {arg[0]}.");
+                    continue;
                 }
-                else
-                {
-                    values.Add(arg);
-                }
+                currentArgList.Add(arg);
             }
-            if (!string.IsNullOrEmpty(key))
-            {
-                Sanity.Requires(!ArgDict.ContainsKey(key), $"Duplicate in options: -{key}.");
-                string value = string.Join(" ", values);
-                ArgDict.Add(key, value);
-            }
+            ArgDict.Add(key, currentArgList.ToArray());
         }
     }
 }
