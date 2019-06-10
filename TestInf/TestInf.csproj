@@ -49,6 +49,8 @@
     <Compile Include="Common\Sanity.cs" />
     <Compile Include="Common\TestInfArgs.cs" />
     <Compile Include="Features\Config.cs" />
+    <Compile Include="Features\HelloWorld\HelloWorld.cs" />
+    <Compile Include="Features\NA\NA.cs" />
     <Compile Include="Features\TestInf.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,8 +58,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Features\HelloWorld\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

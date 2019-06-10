@@ -10,6 +10,34 @@ namespace TestInf
 {
     public static class Common
     {
+        #region Collections
+        public static IEnumerable<T> ToCollection<T>(this T t)
+        {
+            yield return t;
+        }
+        public static IEnumerable<T> ToCollection<T>(params T[] ts)
+        {
+            return ts;
+        }
+        public static IEnumerable<T> Concat<T>(this T t, IEnumerable<T> ts)
+        {
+            return t.ToCollection().Concat(ts);
+        }
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> ts, T t)
+        {
+            return ts.Concat(t.ToCollection());
+        }
+        #endregion
+        #region DateTime
+        public static string ToStringLog(this DateTime dt)
+        {
+            return dt.ToString("yyyy-MM-ss hh:mm:ss");
+        }
+        public static string ToStringPath(this DateTime dt)
+        {
+            return dt.ToString("yyyyMMss_hhmmss");
+        }
+        #endregion
         public static string GetXmlValue(this XmlNode node, string xpath, string attribute = "")
         {
             Sanity.Requires(node != null, "Root node is null.");
@@ -22,13 +50,5 @@ namespace TestInf
             return attrib.Value;
         }
 
-        public static string ToStringLog(this DateTime dt)
-        {
-            return dt.ToString("yyyy-MM-ss hh:mm:ss");
-        }
-        public static string ToStringPath(this DateTime dt)
-        {
-            return dt.ToString("yyyyMMss_hhmmss");
-        }
     }
 }

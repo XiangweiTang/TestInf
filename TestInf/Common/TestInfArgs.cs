@@ -10,7 +10,7 @@ namespace TestInf
     public class TestInfArgs
     {
         public TaskMode Mode { get; private set; } = TaskMode.NA;
-        public string ConfigPath { get; private set; } = "";
+        public string ConfigPath { get; set; } = "";
         public Dictionary<string, string[]> ArgDict { get; private set; } = new Dictionary<string, string[]>();
         public TestInfArgs() { }
         public TestInfArgs(string[] args)

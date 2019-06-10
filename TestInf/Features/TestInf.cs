@@ -13,6 +13,8 @@ namespace TestInf.Features
         public void LoadAndRun(TestInfArgs arg)
         {
             Cfg.Load(arg);
-        }        
+            Run();
+        }
+        public abstract void Run();
     }
 }

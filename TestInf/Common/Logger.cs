@@ -10,10 +10,12 @@ namespace TestInf
     public static class Logger
     {
         public static string Path { get; set; } = "Log.txt";
-        public static void WriteLine(string content)
+        public static void WriteLine(string content, bool writeToFile = true)
         {
             string line = $"{DateTime.Now.ToStringLog()}\t{content}";
-            File.AppendAllText(Path, line);
+            Console.WriteLine(line);
+            if (writeToFile)
+                File.AppendAllText(Path, line);
         }
     }
 }
