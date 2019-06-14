@@ -39,5 +39,16 @@ namespace TestInf
                     throw new TestInfEx($"Invalid task name {taskName}.");
             }
         }
+
+        static void CreateConfig(TestInfArgs arg)
+        {
+            if ((arg.Mode & TaskMode.Config) != 0)
+            {
+                if (!File.Exists(arg.ConfigPath))
+                {
+                    Console.WriteLine("Config doesn't exist. Create an empty one.");
+                }
+            }
+        }
     }
 }
