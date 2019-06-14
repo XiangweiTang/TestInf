@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml;
+using System.Collections;
+using System.Reflection;
 
 namespace TestInf
 {
@@ -36,6 +38,27 @@ namespace TestInf
         public static string ToStringPath(this DateTime dt)
         {
             return dt.ToString("yyyyMMss_hhmmss");
+        }
+        #endregion
+        #region IO
+        public static IEnumerable<string> ReadEmbedLines(string embedPath)
+        {
+            Assembly asmb = Assembly.GetExecutingAssembly();
+            using(StreamReader sr=new StreamReader(asmb.GetManifestResourceStream(embedPath)))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                    yield return line;
+            }
+        }
+
+        public static string ReadEmbedAllLines(string embedPath)
+        {
+            Assembly asmb = Assembly.GetExecutingAssembly();
+            using(StreamReader sr=new StreamReader(asmb.GetManifestResourceStream(embedPath)))
+            {
+                return sr.ReadToEnd();
+            }
         }
         #endregion
         public static string GetXmlValue(this XmlNode node, string xpath, string attribute = "")
